@@ -1,0 +1,23 @@
+estruras condicionais
+ -- servem para a tomada de descisão dentro do algoritmo(regra de negócio)
+
+se **condicao** entao
+ // executa o que quer
+fimse
+
+se media >= 7 entao
+  //comando caso atender a condição
+senao
+  //comando caso não atender a condição
+fimse
+
+
+se media >= 7 entao
+   //comando caso atender a condiação
+senao
+  se media >=4 entao
+    //comando caso atender a condição
+  senao
+    //comando caso não atender
+  fimse
+fimse
