@@ -9,9 +9,12 @@ Var
 media: real
 
 Inicio
+
 // Seção de Comandos, procedimento, funções, operadores, etc... 
 escreva("informe a média do aluno: ")
 leia(media)
+
+escreva()
 
 escreval("primeiro exemplo")
 //primeiro exemplo estrutura condicional
@@ -31,7 +34,7 @@ fimse
 
 escreval("terceiro exemplo")
 
-//segundo exemplo estrutura condicional -- tratando a condição não atendida
+//terceiro exemplo estrutura condicional -- tratando a condição não atendida
 se media >= 7 entao
    escreval("aluno aprovado")
 senao
