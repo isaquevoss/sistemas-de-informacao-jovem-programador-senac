@@ -1,0 +1,40 @@
+<html>
+
+<body>
+
+    <script>
+        function solicitarIngressosEstudante() {
+            var parar = false;
+            var qtd = 0;
+            while (!parar) {               
+                var nome = prompt("informe o nome do estudante");
+                if (nome != '') {
+                    qtd = qtd + 1;
+                }
+                else {
+                    parar = true
+                }
+            }
+            return qtd;
+        }
+
+        function bilheteria() {
+            const tipo_ingresso = prompt("informe a opção desejada 1-estudante 2-normal 9-sair");
+            if (tipo_ingresso == 1) {
+                alert("o valor do ingresso é 5,10");
+            }
+            if (tipo_ingresso == 2) {
+                alert("o valor do ingresso é 12,00");
+            }
+            return tipo_ingresso;
+        }
+
+        var opcao = 0;
+        while (opcao != 9) {
+            opcao = bilheteria();
+        }
+
+    </script>
+</body>
+
+</html>
