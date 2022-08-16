@@ -1,0 +1,53 @@
+<html>
+
+<body>
+    <button id="comprar" style="height: 100">Comprar Ingressos</button>
+    <button id="pagar" style="height: 100">Efetuar Pagamento</button>
+
+    <script>
+        document.getElementById('comprar').addEventListener('click', inicioBilheteria)
+        document.getElementById('pagar').addEventListener('click', calcularTotal)
+
+
+        var qtd_ingressos_normal = 0;
+        var qtd_ingresso_meia = 0;
+        var valor_total = 0;
+        const valor_ingresso = 12;
+        const valor_meia = 6;
+        
+
+        function solicitarOpcaoDesejada() {
+            return prompt('digite 1 para ingresso normal - 2 para meia entrada - 3 para sair');
+        }
+        function mostrarOpcao1() {
+            qtd_ingressos_normal = prompt('digite a quantidade de ingressos');
+        }
+        function mostrarOpcao2() {
+            qtd_ingresso_meia = prompt('digite a quantidade de ingressos')
+        }
+        function mostrarOpcao3() {
+            prompt('obrigado por utilizar nosso sistema')
+        }
+
+        function inicioBilheteria() {
+
+            var opcao_selecionada = solicitarOpcaoDesejada();
+            if (opcao_selecionada == 1) {
+                mostrarOpcao1();
+            } else if (opcao_selecionada == 2) {
+                mostrarOpcao2();
+            } else {
+                mostrarOpcao3();
+            }
+
+        }
+
+        function calcularTotal() {
+            valor_total = (qtd_ingressos_normal * valor_ingresso) + (qtd_ingresso_meia * valor_meia);
+            alert(`o valor total é ${valor_total}`);
+        }
+
+    </script>
+</body>
+
+</html>
