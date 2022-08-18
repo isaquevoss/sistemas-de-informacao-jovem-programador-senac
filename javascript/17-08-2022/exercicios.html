@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="prompt">Prompt</button>
+
+    <input id="input"></input>
+    <button id="bt-input">Input</button>
+
+    <script>
+        document.getElementById('prompt').addEventListener('click', function () {
+            var raio = prompt('qual é o raio do criculo ?');
+            alert('A area do circulo é de ' + calcularAreaCirculo(raio));
+        });
+
+
+        document.getElementById('bt-input').addEventListener('click', function () {
+            var raio = document.getElementById('input').value;
+            alert('A area do circulo é de ' + calcularAreaCirculo(raio));
+        });
+
+        function calcularAreaCirculo(raio) {
+            return 3.14 * (raio * raio);
+        }
+
+        function celsiusParaFahrenheit(celsius) {
+            return celsius * 1.8 + 32;
+        }
+
+        function fahrenheitParaCelsius(fahrenheit) {
+            return (fahrenheit - 32) * (5 / 9);
+        }
+
+        function maiorNumero(num1, num2, num3) {
+            if (num1 > num2 && num1 > num3) {
+                return num1;
+            } else if (num2 > num1 && num2 > num3) {
+                return num2;
+            } else {
+                return num3;
+            }
+        }
+        function media(num1, num2, num3) {
+            return (num1 + num2 + num3) / 3;
+        }
+    </script>
+</body>
+
+</html>

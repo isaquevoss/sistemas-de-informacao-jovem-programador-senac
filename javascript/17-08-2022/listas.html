@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p id="ingressos"> </p>
+
+    <script>
+        ingressos = [];
+
+        function addIngresso(nome, idade, estudante) {
+            ingressos.push({
+                nome: nome,
+                idade: idade,
+                estudante: estudante
+            });
+        }
+
+        function imprimirIngressos() {
+            impressao = ``;
+            ingressos.forEach(element => {
+                impressao = impressao + ` Nome: ${element.nome} <br /> 
+                Idade: ${element.idade} <br />
+                Estudante: ${element.estudante ? 'Sim' : 'Não'} <br />
+                ------------------------------------------------- <br />`;
+            });
+            document.getElementById('ingressos').innerHTML = impressao;
+            return impressao;
+        }
+    </script>
+
+</body>
+
+</html>
