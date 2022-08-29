@@ -10,14 +10,12 @@
         var jogador1 = {
             x: 12,
             y: 15,
+            pontos: 1
         }
-        var inimigos = [{
-            x: 5,
-            y: 5,
-        }]
+        var inimigos = []
 
         function adicionarInimigo() {
-            if (inimigos.length < 15) {
+            if (inimigos.length < 30) {
                 inimigos.push({
                     x: Math.floor(Math.random() * (19 - 0)),
                     y: Math.floor(Math.random() * (19 - 0))
@@ -25,7 +23,7 @@
                 desenharJogo();
             }
         }
-        setInterval(adicionarInimigo, 2000)
+        setInterval(adicionarInimigo, 100)
 
         function desenharJogador() {
             context.fillStyle = `black`;
@@ -40,6 +38,14 @@
             context.clearRect(0, 0, 20, 20);
         }
 
+        function checarColisao() {
+            for (let i = 0; i < inimigos.length; i++) {
+                if ((jogador1.x == inimigos[i].x) && (jogador1.y == inimigos[i].y)) {
+                    inimigos.splice(i, 1);
+                    jogador1.pontos = jogador1.pontos + 1;
+                }
+            }
+        }
 
         function desenharJogo() {
             limparTela();
@@ -55,23 +61,32 @@
             if (event.key == 'ArrowUp') {
                 if (jogador1.y > 0) {
                     jogador1.y = jogador1.y - 1;
+                } else {
+                    jogador1.y = 19;
                 }
             }
             if (event.key == 'ArrowDown') {
                 if (jogador1.y < 19) {
                     jogador1.y = jogador1.y + 1;
+                }else {
+                    jogador1.y = 0;
                 }
             }
             if (event.key == 'ArrowLeft') {
                 if (jogador1.x > 0) {
                     jogador1.x = jogador1.x - 1;
+                }else {
+                    jogador1.x = 19;
                 }
             }
             if (event.key == 'ArrowRight') {
                 if (jogador1.x < 19) {
                     jogador1.x = jogador1.x + 1;
+                }else {
+                    jogador1.x = 0;
                 }
             }
+            checarColisao();
             desenharJogo();
         }
 
