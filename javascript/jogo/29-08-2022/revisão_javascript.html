@@ -1,0 +1,41 @@
+<html>
+
+<body>
+
+    <script>
+        const valor = 100;
+        var valor_total;
+
+        valor_total = 5;
+
+        if (valor > 10 || valor_total > 10) {
+            console.log('o  valor é maior que 10')
+        } else {
+            console.log('o valor não é maior que 10')
+        } 
+
+        function logNoConsole(texto) {
+            console.log(texto);
+            return 'o usuário mandou escrever' + texto;
+        }
+
+        //laços de repetição
+        //FOR
+        const jogadores = ['isaque', 'joão', 'pedro', 'maria', 'alberto']
+        for (let i = 0; i < jogadores.length; i++){
+            console.log('O jogador '+jogadores[i]+' está online;');
+        }
+        console.log('-------------------------------')
+        var i = 0       
+        while(i < jogadores.length){
+            console.log('O jogador '+jogadores[i]+' está online;'); 
+            i++
+        }
+
+        
+
+
+    </script>
+</body>
+
+</html>

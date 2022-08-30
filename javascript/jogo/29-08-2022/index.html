@@ -23,9 +23,9 @@
                 desenharJogo();
             }
         }
-        setInterval(adicionarInimigo, 200) // frequencia que adiciona inimigo
+        setInterval(adicionarInimigo, 20) // frequencia que adiciona inimigo
 
-        setInterval(autoPerseguir, 30)// frequencia que move o jogador
+        setInterval(autoPerseguir, 1)// frequencia que move o jogador
         //mude a quantidade limite de inimigos para 5, 30, 300, 3000
         //e com cada quantidade mude o tempo que adiciona inimigos para 
         //500, 300, 100 , 50
@@ -35,54 +35,53 @@
 
         function autoPerseguir() {
             if (inimigos.length > 0) {
-                const inimigo = retornarInimigoMaisProximo();                
-                var evento = {};
-                if (jogador1.x > inimigo.x) {
-                    evento.key = 'ArrowLeft'
-                } else if (jogador1.x < inimigo.x) {
-                    evento.key = 'ArrowRight'
-                } else if (jogador1.y > inimigo.y) {
-                    evento.key = 'ArrowUp'
-                } else if (jogador1.y < inimigo.y) {
-                    evento.key = 'ArrowDown'
-                }
+                const inimigo =  retornarInimigoMaisProximo();
+                const evento = verificarDirecao(inimigo);
                 movePlayer(evento)
             }
+        }
 
+        function verificarDirecao(inimigo) {
+            var evento= {}
+            if (jogador1.x > inimigo.x) {
+                evento.key = 'ArrowLeft'
+            } else if (jogador1.x < inimigo.x) {
+                evento.key = 'ArrowRight'
+            } else if (jogador1.y > inimigo.y) {
+                evento.key = 'ArrowUp'
+            } else if (jogador1.y < inimigo.y) {
+                evento.key = 'ArrowDown'
+            }
+            return evento;
         }
 
         function retornarInimigoMaisProximo(jogador) {
             var inimigoSelecionado = inimigos[0];
             for (let i = 1; i < inimigos.length; i++) {
                 const inimigoAtual = inimigos[i]
-                var distanciaSelecionado = 0;
-                if (jogador1.x > inimigoSelecionado.x) {
-                    distanciaSelecionado = jogador1.x - inimigoSelecionado.x
-                } else {
-                    distanciaSelecionado = inimigoSelecionado.x - jogador1.x
-                }
-                if (jogador1.y > inimigoSelecionado.y) {
-                    distanciaSelecionado = distanciaSelecionado + (jogador1.y - inimigoSelecionado.y)
-                } else {
-                    distanciaSelecionado = distanciaSelecionado + (inimigoSelecionado.y - jogador1.y)
-                }
-
-                var distanciaAtual = 0;
-                if (jogador1.x > inimigoAtual.x) {
-                    distanciaAtual = jogador1.x - inimigoAtual.x
-                } else {
-                    distanciaAtual = inimigoAtual.x - jogador1.x
-                }
-                if (jogador1.y > inimigoAtual.y) {
-                    distanciaAtual = distanciaAtual + (jogador1.y - inimigoAtual.y)
-                } else {
-                    distanciaAtual = distanciaAtual + (inimigoAtual.y - jogador1.y)
-                }
+                var distanciaSelecionado = calcularDistancia(jogador1, inimigoSelecionado);
+                var distanciaAtual = calcularDistancia(jogador1, inimigoAtual);
 
                 if (distanciaSelecionado > distanciaAtual)
                     inimigoSelecionado = inimigoAtual;
             }
             return inimigoSelecionado;
+        }
+
+        function calcularDistancia(jogador, inimigo) {
+            var distancia = 0;
+            if (jogador.x > inimigo.x) {
+                distancia = jogador.x - inimigo.x
+            } else {
+                distancia = inimigo.x - jogador.x
+            }
+            if (jogador.y > inimigo.y) {
+                distancia = distancia + (jogador.y - inimigo.y)
+            } else {
+                distancia = distancia + (inimigo.y - jogador.y)
+            }
+            return distancia
+
         }
 
         function desenharJogador() {

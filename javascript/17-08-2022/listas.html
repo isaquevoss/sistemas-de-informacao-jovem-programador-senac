@@ -25,12 +25,12 @@
 
         function imprimirIngressos() {
             impressao = ``;
-            ingressos.forEach(element => {
-                impressao = impressao + ` Nome: ${element.nome} <br /> 
-                Idade: ${element.idade} <br />
-                Estudante: ${element.estudante ? 'Sim' : 'Não'} <br />
+            for (let i= 0; i < ingressos.length; i++) {
+                impressao = impressao + ` Nome: ${ingressos[i].nome} <br /> 
+                Idade: ${ingressos[i].idade} <br />
+                Estudante: ${ingressos[i].estudante ? 'Sim' : 'Não'} <br />
                 ------------------------------------------------- <br />`;
-            });
+            };
             document.getElementById('ingressos').innerHTML = impressao;
             return impressao;
         }
