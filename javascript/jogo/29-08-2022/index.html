@@ -1,0 +1,157 @@
+<html>
+
+<body>
+    <canvas id="canvas" height="20" width="20" style="border: 1px solid #CCC;
+         height: 500px; width: 500px; image-rendering: pixelated;"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext('2d');
+
+        var jogador1 = {
+            x: 12,
+            y: 15,
+            pontos: 1
+        }
+        var inimigos = []
+
+        function adicionarInimigo() {
+            if (inimigos.length < 30) { //300 é o limite de inimigos
+                inimigos.push({
+                    x: Math.floor(Math.random() * (19 - 0)),
+                    y: Math.floor(Math.random() * (19 - 0))
+                })
+                desenharJogo();
+            }
+        }
+        setInterval(adicionarInimigo, 200) // frequencia que adiciona inimigo
+
+        setInterval(autoPerseguir, 30)// frequencia que move o jogador
+        //mude a quantidade limite de inimigos para 5, 30, 300, 3000
+        //e com cada quantidade mude o tempo que adiciona inimigos para 
+        //500, 300, 100 , 50
+
+        //mude a velocidade do auto perseguir para 500, 300, 
+        //200, 100, 50 ,30
+
+        function autoPerseguir() {
+            if (inimigos.length > 0) {
+                const inimigo = retornarInimigoMaisProximo();                
+                var evento = {};
+                if (jogador1.x > inimigo.x) {
+                    evento.key = 'ArrowLeft'
+                } else if (jogador1.x < inimigo.x) {
+                    evento.key = 'ArrowRight'
+                } else if (jogador1.y > inimigo.y) {
+                    evento.key = 'ArrowUp'
+                } else if (jogador1.y < inimigo.y) {
+                    evento.key = 'ArrowDown'
+                }
+                movePlayer(evento)
+            }
+
+        }
+
+        function retornarInimigoMaisProximo(jogador) {
+            var inimigoSelecionado = inimigos[0];
+            for (let i = 1; i < inimigos.length; i++) {
+                const inimigoAtual = inimigos[i]
+                var distanciaSelecionado = 0;
+                if (jogador1.x > inimigoSelecionado.x) {
+                    distanciaSelecionado = jogador1.x - inimigoSelecionado.x
+                } else {
+                    distanciaSelecionado = inimigoSelecionado.x - jogador1.x
+                }
+                if (jogador1.y > inimigoSelecionado.y) {
+                    distanciaSelecionado = distanciaSelecionado + (jogador1.y - inimigoSelecionado.y)
+                } else {
+                    distanciaSelecionado = distanciaSelecionado + (inimigoSelecionado.y - jogador1.y)
+                }
+
+                var distanciaAtual = 0;
+                if (jogador1.x > inimigoAtual.x) {
+                    distanciaAtual = jogador1.x - inimigoAtual.x
+                } else {
+                    distanciaAtual = inimigoAtual.x - jogador1.x
+                }
+                if (jogador1.y > inimigoAtual.y) {
+                    distanciaAtual = distanciaAtual + (jogador1.y - inimigoAtual.y)
+                } else {
+                    distanciaAtual = distanciaAtual + (inimigoAtual.y - jogador1.y)
+                }
+
+                if (distanciaSelecionado > distanciaAtual)
+                    inimigoSelecionado = inimigoAtual;
+            }
+            return inimigoSelecionado;
+        }
+
+        function desenharJogador() {
+            context.fillStyle = `black`;
+            context.fillRect(jogador1.x, jogador1.y, 1, 1);
+        }
+        function desenharInimigo(inimigo) {
+            context.fillStyle = `red`;
+            context.fillRect(inimigo.x, inimigo.y, 1, 1);
+        }
+
+        function limparTela() {
+            context.clearRect(0, 0, 20, 20);
+        }
+
+        function checarColisao() {
+            for (let i = 0; i < inimigos.length; i++) {
+                if ((jogador1.x == inimigos[i].x) && (jogador1.y == inimigos[i].y)) {
+                    inimigos.splice(i, 1);
+                    jogador1.pontos = jogador1.pontos + 1;
+                }
+            }
+        }
+
+        function desenharJogo() {
+            limparTela();
+            for (let i = 0; i < inimigos.length; i++) {
+                desenharInimigo(inimigos[i]);
+            }
+            desenharJogador();
+        }
+
+        document.addEventListener('keydown', movePlayer);
+
+        function movePlayer(event) {
+            console.log(event)
+            if (event.key == 'ArrowUp') {
+                if (jogador1.y > 0) {
+                    jogador1.y = jogador1.y - 1;
+                } else {
+                    jogador1.y = 19;
+                }
+            }
+            if (event.key == 'ArrowDown') {
+                if (jogador1.y < 19) {
+                    jogador1.y = jogador1.y + 1;
+                } else {
+                    jogador1.y = 0;
+                }
+            }
+            if (event.key == 'ArrowLeft') {
+                if (jogador1.x > 0) {
+                    jogador1.x = jogador1.x - 1;
+                } else {
+                    jogador1.x = 19;
+                }
+            }
+            if (event.key == 'ArrowRight') {
+                if (jogador1.x < 19) {
+                    jogador1.x = jogador1.x + 1;
+                } else {
+                    jogador1.x = 0;
+                }
+            }
+            checarColisao();
+            desenharJogo();
+        }
+
+    </script>
+</body>
+
+</html>
