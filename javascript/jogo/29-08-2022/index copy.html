@@ -1,0 +1,199 @@
+<html>
+
+<body>
+    <canvas id="canvas" height="20" width="20" style="border: 1px solid #CCC;
+         height: 500px; width: 500px; image-rendering: pixelated;"></canvas>
+    <div id="pontos"></div>
+    <script>
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext('2d');
+
+        var jogadores = [];
+        var eu = {
+            x: 0,
+            y: 0,
+            pontos: 0,
+            color: 'yellow'
+        }
+        jogadores.push(eu);
+
+        var inimigos = []
+
+        function adicionarInimigo() {
+            if (inimigos.length < 30) { //300 é o limite de inimigos
+                const enemy = {
+                    x: Math.floor(Math.random() * (19 - 0)),
+                    y: Math.floor(Math.random() * (19 - 0)),
+                    pontos: Math.floor(Math.random() * (19) +1)
+                };
+                inimigos.push(enemy)
+                setInterval(() => autoMoveEnemy(enemy), 750)
+            }
+        }
+        function autoMoveEnemy(enemy) {
+            const axis = ['x', 'y'];
+            const i = Math.floor(Math.random() * 2);
+
+            enemy[axis[i]] < 19 ? enemy[axis[i]]++ : enemy[axis[i]] = 0;
+
+        }
+
+        setInterval(adicionarInimigo, 100) // frequencia que adiciona inimigo
+        colors = ['orange', 'black', 'green', 'blue', 'purple']
+
+        for (let index = 0; index < 5; index++) {
+            const player = {
+                x: Math.floor(Math.random() * (19 - 0)),
+                y: Math.floor(Math.random() * (19 - 0)),
+                pontos: 0,
+                color: 'blue' //colors[index]
+            }
+            jogadores.push(player)
+            setInterval(() => autoPerseguir(player), 300)
+
+        }
+
+
+        // frequencia que move o jogador
+        //mude a quantidade limite de inimigos para 5, 30, 300, 3000
+        //e com cada quantidade mude o tempo que adiciona inimigos para 
+        //500, 300, 100 , 50
+
+        //mude a velocidade do auto perseguir para 500, 300, 
+        //200, 100, 50 ,30
+
+
+
+        function autoPerseguir(player) {
+            if (inimigos.length > 0) {
+                const inimigo = retornarInimigoMaisProximo(player);
+                const evento = verificarDirecao(player, inimigo);
+                movePlayer(player, evento)
+            }
+        }
+
+        function verificarDirecao(jogador, inimigo) {
+            var evento = {}
+            if (jogador.x > inimigo.x) {
+                evento.key = 'ArrowLeft'
+            } else if (jogador.x < inimigo.x) {
+                evento.key = 'ArrowRight'
+            } else if (jogador.y > inimigo.y) {
+                evento.key = 'ArrowUp'
+            } else if (jogador.y < inimigo.y) {
+                evento.key = 'ArrowDown'
+            }
+            return evento;
+        }
+
+        function retornarInimigoMaisProximo(jogador) {
+            var inimigoSelecionado = inimigos[0];
+            for (let i = 1; i < inimigos.length; i++) {
+                const inimigoAtual = inimigos[i]
+                var distanciaSelecionado = calcularDistancia(jogador, inimigoSelecionado);
+                var distanciaAtual = calcularDistancia(jogador, inimigoAtual);
+
+                if (distanciaSelecionado > distanciaAtual)
+                    inimigoSelecionado = inimigoAtual;
+            }
+            return inimigoSelecionado;
+        }
+
+        function calcularDistancia(jogador, inimigo) {
+            var distancia = 0;
+            if (jogador.x > inimigo.x) {
+                distancia = jogador.x - inimigo.x
+            } else {
+                distancia = inimigo.x - jogador.x
+            }
+            if (jogador.y > inimigo.y) {
+                distancia = distancia + (jogador.y - inimigo.y)
+            } else {
+                distancia = distancia + (inimigo.y - jogador.y)
+            }
+            return distancia
+
+        }
+
+        function desenharJogador(jogador) {
+            context.fillStyle = jogador.color;
+            context.fillRect(jogador.x, jogador.y, 1, 1);
+        }
+        function desenharInimigo(inimigo) {
+            context.fillStyle = `red`;
+            context.fillRect(inimigo.x, inimigo.y, 1, 1);
+        }
+
+        function limparTela() {
+            context.clearRect(0, 0, 20, 20);
+        }
+
+        function checarColisao(jogador) {
+            for (let i = 0; i < inimigos.length; i++) {
+                if ((jogador.x == inimigos[i].x) && (jogador.y == inimigos[i].y)) {
+                    jogador.pontos += inimigos[i].pontos;
+                    inimigos.splice(i, 1);
+                    
+                }
+            }
+        }
+
+        function desenharJogo() {
+            var pontos = '';
+            limparTela();
+            for (let i = 0; i < inimigos.length; i++) {
+                desenharInimigo(inimigos[i]);
+            }
+            for (let i = 0; i < jogadores.length; i++) {
+                desenharJogador(jogadores[i]);
+                pontos = `${pontos} jogador ${i} pontos: ${jogadores[i].pontos}\n`;
+
+            }
+            document.getElementById('pontos').innerText = pontos;
+            
+            requestAnimationFrame(() => {
+                desenharJogo()
+            })
+
+        }
+
+        document.addEventListener('keydown', (event) => movePlayer(eu, event));
+
+        function movePlayer(jogador, event) {
+            console.log(event)
+            if (event.key == 'ArrowUp') {
+                if (jogador.y > 0) {
+                    jogador.y = jogador.y - 1;
+                } else {
+                    jogador.y = 19;
+                }
+            }
+            if (event.key == 'ArrowDown') {
+                if (jogador.y < 19) {
+                    jogador.y = jogador.y + 1;
+                } else {
+                    jogador.y = 0;
+                }
+            }
+            if (event.key == 'ArrowLeft') {
+                if (jogador.x > 0) {
+                    jogador.x = jogador.x - 1;
+                } else {
+                    jogador.x = 19;
+                }
+            }
+            if (event.key == 'ArrowRight') {
+                if (jogador.x < 19) {
+                    jogador.x = jogador.x + 1;
+                } else {
+                    jogador.x = 0;
+                }
+            }
+            checarColisao(jogador);
+        }
+
+        desenharJogo();
+    </script>
+</body>
+
+</html>
