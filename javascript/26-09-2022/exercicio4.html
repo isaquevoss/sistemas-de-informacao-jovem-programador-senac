@@ -1,0 +1,36 @@
+<html>
+
+<body>
+    <button onclick="calcularAumento()">Calcular aumento </button>
+
+    <script>
+
+
+        function calcularAumento() {
+            var salario_atual = parseFloat(prompt(`informe seu salario`))
+            var percentual_aumento = 0;
+
+            if (salario_atual <= 280) {
+                percentual_aumento = 20;
+            } else if (salario_atual <= 700) {
+                percentual_aumento = 15
+            } else if (salario_atual <= 1500) {
+                percentual_aumento = 10
+            } else {
+                percentual_aumento = 5
+            }
+
+            var valor_aumento = (salario_atual * (percentual_aumento / 100))
+
+            var novo_salario = salario_atual + valor_aumento;
+
+            alert(`salario atual R$ ${salario_atual} \n
+            % de aumento: ${percentual_aumento}% \n
+            valor de aumento: R$ ${valor_aumento} \n
+            novo salario: R$ ${novo_salario}
+            `)
+        }
+    </script>
+</body>
+
+</html>

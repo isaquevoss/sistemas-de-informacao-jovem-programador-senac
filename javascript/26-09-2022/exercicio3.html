@@ -1,0 +1,42 @@
+<html>
+
+<body>
+    <button onclick="comprarCombustivel()">Comprar combustivel</button>
+    <script>
+        const preco_gasolina = 2.5;
+        const preco_alcool = 1.9;
+
+        function comprarCombustivel() {
+            var tipo_combustivel = ``;
+            while ((tipo_combustivel != `A`) && (tipo_combustivel != `G`)) {
+                tipo_combustivel = prompt(`Informe o combustivel que voce deseja. A-álcool, G-gasolina`)
+            }
+
+            var litros_vendidos = prompt(`informe a quantidade de litros`)
+
+            var valor_total = 0;
+            if (tipo_combustivel == `A`) {
+                valor_total = (preco_alcool * litros_vendidos);
+                if (litros_vendidos <= 20) {
+                    valor_total = valor_total - (valor_total * 0.03);
+                } else {
+                    valor_total = valor_total - (valor_total * 0.05);
+                }
+            }
+
+            if (tipo_combustivel == `G`) {
+                valor_total = (preco_gasolina * litros_vendidos);
+                if (litros_vendidos <= 20) {
+                    valor_total = valor_total - (valor_total * 0.04);
+                } else {
+                    valor_total = valor_total - (valor_total * 0.06);
+                }
+            }
+
+            alert(`valor total: ${valor_total}`)
+        }
+
+    </script>
+</body>
+
+</html>

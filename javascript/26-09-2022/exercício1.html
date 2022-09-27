@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <button onclick="calcularSalario()">Calcular Salario</button>
+
+    <script>
+        function calcularSalario() {
+            var salario_por_hora = prompt('Informe o valor do seu salário por horas')
+            var horas_trabalhadas = prompt('Informe a quantidade de horas trabalhadas')
+
+            var salario_bruto = horas_trabalhadas * salario_por_hora;
+            var IR = salario_bruto * 0.11;
+            var INSS = salario_bruto * 0.08;
+            var sindicato = salario_bruto * 0.05;
+            var salario_liquido = salario_bruto - IR - INSS - sindicato;
+
+            alert(`Salario bruto: ${salario_bruto} \n
+            IR: ${IR} \n
+            INSS: ${INSS} \n
+            Sindicato: ${sindicato} \n
+            Salario Liquido ${salario_liquido} `)
+        }
+        calcularSalario();
+    </script>
+</body>
+
+</html>

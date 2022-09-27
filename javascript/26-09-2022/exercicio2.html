@@ -1,0 +1,39 @@
+<html>
+
+<body>
+    <button onclick="calcularFolhaPagamento()">Calcular folha de pagamento</button>
+     
+    <script>
+        function calcularFolhaPagamento() {
+            var salario_por_hora = prompt('Informe o valor do seu salário por horas')
+            var horas_trabalhadas = prompt('Informe a quantidade de horas trabalhadas')
+
+            var salario_bruto = horas_trabalhadas * salario_por_hora;
+
+            var ir = 0;
+
+            if ((salario_bruto > 900) && (salario_bruto <= 1500)) {
+                ir = salario_bruto * 0.05;
+            } else if ((salario_bruto > 1500) && (salario_bruto <= 2500)) {
+                ir = salario_bruto * 0.1;
+            } else if (salario_bruto > 2500) {
+                ir = salario_bruto * 0.2;
+            }
+
+            var inss = salario_bruto * 0.1;
+
+            var fgts = salario_bruto * 0.11;
+
+            var salario_liquido = salario_bruto - ir - inss;
+
+            alert(`Salario Bruto: ${salario_bruto} \n
+                IR: ${ir} \n
+                INSS: ${inss} \n
+                FGTS: ${fgts} \n
+                Salario Liquido ${salario_liquido}
+                `)
+        }
+    </script>
+</body>
+
+</html>
